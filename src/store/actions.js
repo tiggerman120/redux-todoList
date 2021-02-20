@@ -4,14 +4,14 @@
 export const todoList = () => {
   return {
     type: 'TODO',
-    payload: initialState,
   }
 }
 
-export const addItem = () => {
+export const addItem = (item) => {
+  console.log(`function working, item: ${item}`)
   return {
     type: 'ADDITEM',
-    payload: [...state, item]
+    payload: item
   }
 }
 

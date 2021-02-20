@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+
+
 let initialState = {
   list: [
     { text: 'clean room',
@@ -14,21 +17,27 @@ let initialState = {
 }
 
 let reducers = (state = initialState, action) => {
-  console.log(state);
-  let { type } = action;
+  
+
+  console.log(state.list)
+  let { type, payload } = action;
+  console.log(payload)
   switch (type) {
     case 'TODO':
-
-    return initialState;
-
-    case 'ADD ITEM':
-    
-    return { ...state };
+      
+      return initialState;
+      
+      case 'ADDITEM':
+      console.log(state)
+    console.log(payload)
+    return {
+      
+      ...state,
+      list: [...state.list, payload] };
 
     default:
       return state;
   }
-
 }
 
 export default reducers;

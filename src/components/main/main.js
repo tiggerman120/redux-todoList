@@ -1,4 +1,5 @@
-import TodoForm from '../todo-form/todo-form'
+import TodoList from '../todo-list/todo-list'
+import TodoForm from '../todo-form/todo-form';
 
 const Main = () => {
 
@@ -8,6 +9,7 @@ const Main = () => {
     <div>
       <h1>Proof of life</h1>
       <TodoForm />
+      <TodoList />
     </div>
   )
 }
