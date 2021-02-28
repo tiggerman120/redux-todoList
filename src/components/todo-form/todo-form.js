@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, FormControl, FormGroup, Input, InputLabel, Paper, Slider } from '@material-ui/core';
-import { addItem } from '../../store/actions'
+import { addItem } from '../../store/actions/actions'
 
 import './todo-form.scss'
 
@@ -9,12 +9,6 @@ const mapDispatchToProps = { addItem }
 
 const TodoForm = (props) => {
   const [item, setItem] = useState([])
-  
-  useEffect((item) => {
-
-    console.log(`form useeffect triggering ${item}`)
-    
-  })
 
   const inputChangeHandler = e => {
 
@@ -28,13 +22,13 @@ const TodoForm = (props) => {
     setItem({ ...item, [e.target.name]: value })
   }
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log('Button working');
-    setItem(item)
-    console.log(item);
-    props.addItem(item)
-  }
+    const handleClick = (e) => {
+      e.preventDefault();
+      console.log('Button working');
+      props.addItem(item)
+      setItem(item)
+      console.log(item);
+    }
 
   return (
     // <h1>todoForm Proof of life</h1>
@@ -70,7 +64,7 @@ const TodoForm = (props) => {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    list: state.list
+    todoList: state.reducers
   }
 }
 
