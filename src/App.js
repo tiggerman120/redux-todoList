@@ -1,11 +1,20 @@
 import Main from './components/main/main'
-import './App.css';
+import { Container, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: 'lightGrey',
+  }
+}))
 
 function App() {
+  const classes = useStyles();
   return (
-    <div className="App">
+    <Container className={classes.root}>
       <Main />
-    </div>
+    </Container>
   );
 }
 

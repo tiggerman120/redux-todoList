@@ -1,16 +1,29 @@
-import TodoList from '../todo-list/todo-list'
+import Header from '../header/header';
+import Footer from '../footer/footer';
+import TodoList from '../todo-list/todo-list';
 import TodoForm from '../todo-form/todo-form';
+import { Container, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: 'lightGrey',
+  }
+}))
 
 const Main = () => {
-
+const classes = useStyles();
 
 
   return (
-    <div>
-      <h1>Proof of life</h1>
+    <Grid Container className={classes.root}>
+      <Header />
       <TodoForm />
+      <br />
       <TodoList />
-    </div>
+      <Footer />
+    </Grid>
   )
 }
 export default Main

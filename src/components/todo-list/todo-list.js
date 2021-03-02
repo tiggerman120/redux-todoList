@@ -1,20 +1,37 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-
-import { Button, Card, Container, List, ListItem } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Card, Container, Grid, List, ListItem, Paper } from '@material-ui/core'
 import { asyncGetData, deleteItem, updateItemPropertyComplete} from '../../store/actions/actions';
-import './todo-list.scss'
+
 
 const mapDispatchToProps = { asyncGetData, deleteItem, updateItemPropertyComplete };
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  completefalse: {
+    backgroundColor: 'pink',
+  },
+  completetrue: {
+    backgroundColor: 'green',
+  }
+
+}))
+
+
 
 const TodoList = (props) => {
   const [response, setResponse] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const classes = useStyles()
   console.log(props)
 
   const updateOneItem = (item) => {
     console.log(item)
-    props.updateItem(item)
+    props.updateItemPropertyComplete(item)
     console.log(item)
     let res = response.map((items, i) => 
       items._id === item._id ? {...items, complete: !items.complete } : items
@@ -50,29 +67,29 @@ const TodoList = (props) => {
   })
 
   if (isLoading === true) {
-    return <div className="app">Loading...</div>
+    return <Container className="app">Loading...</Container>
   } else {
     return (
-      <Container className="todoList">
-        <h1>list Proof of life</h1>
-        {response.map((item, i) => (
-          <Card className="todoListCard" key={i}>
-            <List className={`complete-${item.complete.toString()}`}>
-            
-              <ListItem className="listItem" alignItems="flex-start">Task: {item.text}</ListItem>
-              
-              <ListItem className="listItem">For: {item.assignee}</ListItem>
-              
-              <ListItem className="listItem">Difficulty: {item.difficulty}</ListItem>
-              
-              <Button onClick={() => {updateOneItem(item)}}>complete</Button>
+      <Grid container spacing={3} className={classes.root}>
 
-              <Button onClick={() => {deleteOneItem(item)}}>Delete</Button>
-            </List>
+        {response.map((item, i) => (
+          <Grid item xs={6} className="todoListCard" key={i}>
+            <Paper className={item.complete === true ? classes.completetrue : classes.completefalse}>
             
-          </Card>
+              <ListItem className="listItem">{<p className="listItemText">Task: {item.text}</p>}</ListItem>
+              
+              <ListItem className="listItem">{<p className="listItemText">For: {item.assignee}</p>}</ListItem>
+              
+              <ListItem className="listItem">Difficulty: {<p className="listItemText">{item.difficulty}</p>}</ListItem>
+              
+              <Button className="completeButton" onClick={() => {updateOneItem(item)}}>complete</Button>
+
+              <Button className="deleteButton" onClick={() => {deleteOneItem(item)}}>Delete</Button>
+            </Paper>
+            
+          </Grid>
         ))}
-      </Container>
+      </Grid>
     )
   }
 }
