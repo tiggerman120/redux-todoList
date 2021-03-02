@@ -1,26 +1,5 @@
 import backend from '../apis/backend'
 
-
-
-export const todoList = () => {
-  return {
-    type: 'TODO',
-  }
-}
-
-// export const get = async () => dispatch => {
-//   return {
-//     axios.get(`https://garrett-bearer-auth.herokuapp.com/todo`)
-//       .then(response => {
-//         let data = response.data
-//         dispatch(getData(data))
-//       })
-//   }
-// }
-
-
-
-
 export const asyncGetData = () => async dispatch => {
   try {
     const res = await backend.get('/todo')
@@ -31,7 +10,6 @@ export const asyncGetData = () => async dispatch => {
   }
 };
 
-
 export const addItem = (item) => async dispatch => {
   try {
     console.log(`function working, item: ${item}`)
@@ -40,6 +18,7 @@ export const addItem = (item) => async dispatch => {
       assignee: item.assignee,
       complete: item.complete,
       difficulty: item.difficulty,
+      editing: item.editing
 
     })
     console.log(res)
@@ -55,6 +34,24 @@ export const deleteItem = (item) => async dispatch => {
     const res = await backend.delete(`/todo/${item._id}`)
     console.log(res)
     dispatch({ type: 'DELETEONE', payload: res.data.result })
+  }
+  catch (e) {
+    console.log(e)
+  }
+}
+
+export const updateItem = (item) => async dispatch => {
+  console.log(item)
+  try {
+    const res = await backend.put(`/todo/${item._id}`, {
+      text: item.text,
+      assignee: item.assignee,
+      complete: item.complete,
+      difficulty: item.difficulty,
+      editing: item.editing,
+    })
+    console.log(res.data)
+    dispatch({ type: 'UPDATEPROPERTY', payload: res.data})
   }
   catch (e) {
     console.log(e)

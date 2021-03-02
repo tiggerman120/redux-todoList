@@ -1,12 +1,11 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { Button } from '@material-ui/core'
-import { deleteItem, asyncGetData } from '../../store/actions/actions';
 
-const mapDispatchToProps = { deleteItem, asyncGetData };
+import { Button, Card, Container, List, ListItem } from '@material-ui/core'
+import { asyncGetData, deleteItem, updateItem} from '../../store/actions/actions';
+import './todo-list.scss'
 
+const mapDispatchToProps = { asyncGetData, deleteItem, updateItem };
 
 const TodoList = (props) => {
   const [response, setResponse] = useState([]);
@@ -14,9 +13,13 @@ const TodoList = (props) => {
   const [listItem, setListitem] = useState([]);
   console.log(props)
 
-  
+  const updateOneItem = (item) => {
+    console.log(item)
+    props.updateItem(item)
+    console.log(item)
+  }
+
   const deleteOneItem = (item) => {
-    
     props.deleteItem(item)
     let res = response.filter(items => items !== item)
     console.log(res)
@@ -25,8 +28,6 @@ const TodoList = (props) => {
     
   }
   
-
-
   useEffect(() => {
     console.log(props)
     const getData = async () => {
@@ -44,33 +45,30 @@ const TodoList = (props) => {
     setResponse(props.todoList)
   })
 
-  useEffect(() => {
-    console.log(props)
-    //setResponse(props.todoList)
-  }, [response])
-
-  useEffect(() => {
-   
-  }, [])
-
-
   if (isLoading === true) {
     return <div className="app">Loading...</div>
   } else {
     return (
-      <div className="todoForm">
+      <Container className="todoList">
         <h1>list Proof of life</h1>
         {response.map((item, i) => (
-          <div key={i}>
-            <ul>
-              <li>Task: {item.text}</li>
-              <li>For: {item.assignee}</li>
-              <li>Difficulty: {item.difficulty}</li>
+          <Card className="todoListCard" key={i}>
+            <List className={`complete-${item.complete.toString()}`}>
+            
+              <ListItem className="listItem" alignItems="flex-start">Task: {item.text}</ListItem>
+              
+              <ListItem className="listItem">For: {item.assignee}</ListItem>
+              
+              <ListItem className="listItem">Difficulty: {item.difficulty}</ListItem>
+              
+              <Button onClick={() => {updateOneItem(item)}}>complete</Button>
+
               <Button onClick={() => {deleteOneItem(item)}}>Delete</Button>
-            </ul>
-          </div>
+            </List>
+            
+          </Card>
         ))}
-      </div>
+      </Container>
     )
   }
 }
