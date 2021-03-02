@@ -2,21 +2,25 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { Button, Card, Container, List, ListItem } from '@material-ui/core'
-import { asyncGetData, deleteItem, updateItem} from '../../store/actions/actions';
+import { asyncGetData, deleteItem, updateItemPropertyComplete} from '../../store/actions/actions';
 import './todo-list.scss'
 
-const mapDispatchToProps = { asyncGetData, deleteItem, updateItem };
+const mapDispatchToProps = { asyncGetData, deleteItem, updateItemPropertyComplete };
 
 const TodoList = (props) => {
   const [response, setResponse] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [listItem, setListitem] = useState([]);
   console.log(props)
 
   const updateOneItem = (item) => {
     console.log(item)
     props.updateItem(item)
     console.log(item)
+    let res = response.map((items, i) => 
+      items._id === item._id ? {...items, complete: !items.complete } : items
+    )
+    console.log(res)
+    setResponse(res)
   }
 
   const deleteOneItem = (item) => {

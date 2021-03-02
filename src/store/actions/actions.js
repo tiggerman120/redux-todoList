@@ -40,18 +40,18 @@ export const deleteItem = (item) => async dispatch => {
   }
 }
 
-export const updateItem = (item) => async dispatch => {
+export const updateItemPropertyComplete = (item) => async dispatch => {
   console.log(item)
   try {
     const res = await backend.put(`/todo/${item._id}`, {
       text: item.text,
       assignee: item.assignee,
-      complete: item.complete,
+      complete: !item.complete,
       difficulty: item.difficulty,
       editing: item.editing,
     })
+    dispatch({ type: 'UPDATECOMPLETEPROPERTY', payload: res.data})
     console.log(res.data)
-    dispatch({ type: 'UPDATEPROPERTY', payload: res.data})
   }
   catch (e) {
     console.log(e)

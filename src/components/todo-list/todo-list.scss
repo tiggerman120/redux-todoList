@@ -2,15 +2,15 @@
 .todoListCard {
   display: inline-grid;
   grid-template-columns: 45vw 45vw;
-  grid-template-rows: 10vw 10vw 10vw;
-  row-gap: 10px;
-  width: 45vw;
+  grid-template-rows: 11vw;
+  gap: 10px;
+  align-items: start;
 }
   
   .complete-true {
     text-align: center;
     background-color: green;
-    text-decoration: line-through;
+    
   }
 
   .complete-false {

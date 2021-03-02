@@ -18,7 +18,7 @@ let reducers = (state = [], action) => {
       console.log(payload)
       return state, payload
 
-    case 'UPDATEPROPERTY':
+    case 'UPDATECOMPLETEPROPERTY':
       console.log(payload)
       return state.map(
            (content, i) => content._id === payload._id ? {...content, complete: !content.complete }
